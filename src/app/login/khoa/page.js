@@ -27,7 +27,7 @@ function Page() {
       // xử lý lưu user ở đâu đó rồi
       setItemOnLocalStorage('user[khoa]', resquest.data)
       // chuyển trang
-      router.push('/dashboard/diem', { replace: true })
+      router.push('/dashboard/khoa/monhoc', { replace: true })
     } catch (e) {
       setError(e.response.data.message || e.message)
       setLoad(false)

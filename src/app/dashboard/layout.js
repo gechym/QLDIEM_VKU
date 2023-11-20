@@ -63,6 +63,40 @@ function Layout({ children }) {
         </div>
       )
     }
+
+    if (checkItemInLocalStorage('user[khoa]')) {
+      return (
+        <div className="mt-5">
+          <p className="text-md">Khoa</p>
+          <ul className="">
+            <li className="pl-5 text-sm py-2 hover:bg-[rgb(64,84,103)] cursor-pointer">
+              <Link className="flex" href="/dashboard/khoa/monhoc">
+                <AvatarIcon className="w-5 h-5 mr-2" />
+                Quản lý môn học
+              </Link>
+            </li>
+            <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
+              <Link className="flex" href="/dashboard/khoa/sv">
+                <AvatarIcon className="w-5 h-5 mr-2" />
+                Quản lý sinh viên
+              </Link>
+            </li>
+            <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
+              <Link className="flex" href="/dashboard/khoa/">
+                <BookmarkFilledIcon className="w-5 h-5 mr-2" />
+                Quản lý giáo viên
+              </Link>
+            </li>
+            <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
+              <Link className="flex" href="/dashboard/khoa/">
+                <BookmarkFilledIcon className="w-5 h-5 mr-2" />
+                Quản Lớp tín chi
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )
+    }
     return null
   }
 
