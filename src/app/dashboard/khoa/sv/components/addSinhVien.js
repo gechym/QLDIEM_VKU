@@ -13,9 +13,10 @@ import {
 } from '~/app/components/ui/dialog'
 import { Input } from '~/app/components/ui/input'
 import { Label } from '~/app/components/ui/label'
+import { getItemFromLocalStorage } from '~/utils/localStorage'
 
 // eslint-disable-next-line import/prefer-default-export
-export function AddSinhVien() {
+export function AddSinhVien({ lop }) {
   //
   const [MASV, setMASV] = React.useState('')
   const [HO, setHO] = React.useState('')
@@ -35,7 +36,7 @@ export function AddSinhVien() {
   }
   const handleSubmit = async () => {
     const data = {
-      MASV,
+      MASV: `${MASV}-${Date.now()}`,
       HO,
       TEN,
       GIOITINH,
@@ -47,7 +48,7 @@ export function AddSinhVien() {
     }
     console.log(data)
     try {
-      const res = await axios.post('http://localhost:8080/api/v1/khoa/sv', data)
+      const res = await axios.post(`http://localhost:8080/api/v1/khoa/sv?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`, data)
       console.log(res.data.data)
       alert('Thêm sinh viên thành công')
       // reload lại trang
@@ -68,52 +69,65 @@ export function AddSinhVien() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Mã sinh viên" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Mã sinh viên" className="text-left text-[#2A3F54]">
               Mã sinh viên
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value.toUpperCase(), setMASV)} id="Mã sinh viên" value={MASV} className="col-span-3" />
+            <Input placeholder="20IT123" onChange={(e) => handleUpdateState(e.target.value.toUpperCase(), setMASV)} id="Mã sinh viên" value={MASV} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Họ" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Họ" className="text-left text-[#2A3F54]">
               Họ
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setHO)} id="Họ" value={HO} className="col-span-3" />
+            <Input placeholder="Nguyễn" onChange={(e) => handleUpdateState(e.target.value, setHO)} id="Họ" value={HO} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Tên" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Tên" className="text-left text-[#2A3F54]">
               Tên
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setTEN)} id="Tên" value={TEN} className="col-span-3" />
+            <Input placeholder="Văn A" onChange={(e) => handleUpdateState(e.target.value, setTEN)} id="Tên" value={TEN} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Giới tính" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Giới tính" className="text-left text-[#2A3F54]">
               Giới tính
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setGIOITINH)} id="Giới tính" value={GIOITINH} className="col-span-3" />
+            <Input placeholder="Nam" onChange={(e) => handleUpdateState(e.target.value, setGIOITINH)} id="Giới tính" value={GIOITINH} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Địa chỉ" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Địa chỉ" className="text-left text-[#2A3F54]">
               Địa chỉ
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setDIACHI)} id="Địa chỉ" value={DIACHI} className="col-span-3" />
+            <Input placeholder="470 Trần Đại Nghĩa" onChange={(e) => handleUpdateState(e.target.value, setDIACHI)} id="Địa chỉ" value={DIACHI} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Ngày sinh" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Ngày sinh" className="text-left text-[#2A3F54]">
               Ngày sinh
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setNGAYSINH)} id="Ngày sinh" value={NGAYSINH} className="col-span-3" />
+            <Input placeholder="20-11-2002" onChange={(e) => handleUpdateState(e.target.value, setNGAYSINH)} id="Ngày sinh" value={NGAYSINH} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Mã lớp" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Mã lớp" className="text-left text-[#2A3F54]">
               Mã lớp
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setMALOP)} id="Mã lớp" value={MALOP} className="col-span-3" />
+            <select onChange={(e) => handleUpdateState(e.target.value, setMALOP)} id="countries" className="col-span-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value="" selected>
+                Chọn lớp học
+              </option>
+              {
+                lop.map((item) => (
+                  <option key={item.MALOP} value={item.MALOP}>
+                    {item.MALOP}
+                    {' '}
+                    {item.TENLOP}
+                  </option>
+                ))
+              }
+            </select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Email" className="text-right text-[#2A3F54]">
+            <Label htmlFor="Email" className="text-left text-[#2A3F54]">
               Email
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setEMAIL)} id="Email" value={EMAIL} className="col-span-3" />
+            <Input placeholder="ndbao.20it6@vku.udn.vn" onChange={(e) => handleUpdateState(e.target.value, setEMAIL)} id="Email" value={EMAIL} className="col-span-3" />
           </div>
         </div>
         <DialogFooter>

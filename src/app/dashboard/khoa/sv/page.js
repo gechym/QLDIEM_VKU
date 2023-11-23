@@ -8,24 +8,37 @@ import { ToastAction } from '~/app/components/ui/toast'
 import { Button } from '~/app/components/ui/button'
 import { AddSinhVien } from '~/app/dashboard/khoa/sv/components/addSinhVien'
 import { EditSinhVien } from '~/app/dashboard/khoa/sv/components/editSinhVien'
+import { getItemFromLocalStorage } from '~/utils/localStorage'
 
 function Page() {
   const [data, setData] = React.useState([])
+  const [lop, setLop] = React.useState([])
   const { toast } = useToast()
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get('http://localhost:8080/api/v1/khoa/sv')
-      setData(res.data.data)
-    }
-    fetchData()
+    setInterval(() => {
+      const fetchData = async () => {
+        const lopRes = await axios.get(`http://localhost:8080/api/v1/khoa/lop?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`)
+        const res = await axios.get(`http://localhost:8080/api/v1/khoa/sv?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`)
+        setData(res.data.data)
+        setLop(lopRes.data.data)
+      }
+      fetchData()
+    }, 1000)
+    // const fetchData = async () => {
+    //   const lopRes = await axios.get(`http://localhost:8080/api/v1/khoa/lop?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`)
+    //   const res = await axios.get(`http://localhost:8080/api/v1/khoa/sv?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`)
+    //   setData(res.data.data)
+    //   setLop(lopRes.data.data)
+    // }
+    // fetchData()
   }, [])
 
   const handleDeleteSinhVien = async (mmh) => {
     try {
-      await axios.delete(`http://localhost:8080/api/v1/khoa/sv/${mmh}`)
+      await axios.delete(`http://localhost:8080/api/v1/khoa/sv/${mmh}?khoa${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`)
 
-      alert('Xóa môn học thành công')
+      alert('Xóa sinh vien thành công')
       // reload lại trang
       window.location.reload()
     } catch (error) {
@@ -53,7 +66,7 @@ function Page() {
         <td className="py-2 px-6 border-b border-gray-200">{item.EMAIL}</td>
         <td className="py-2 px-6 border-b border-gray-200">
           <Button onClick={() => { handleDeleteSinhVien(item.MASV) }} variant="outline" className="bg-red-700 hover:bg-red-700 hover:text-white text-white">Xóa</Button>
-          <EditSinhVien data={item} />
+          <EditSinhVien lop={lop} data={item} />
         </td>
       </tr>
     )
@@ -69,7 +82,7 @@ function Page() {
 
             <thead>
               <tr className="bg-[#405467]">
-                <th className="w-1/5 py-4 px-4 text-left text-[#ECF0F1] font-bold text-[11px] uppercase">Mã sinh viên</th>
+                <th className="w-1/3 py-4 px-4 text-left text-[#ECF0F1] font-bold text-[11px] uppercase">Mã sinh viên</th>
                 <th className="w-1/4 py-4 px-4 text-left text-[#ECF0F1] font-bold text-[11px] uppercase">Ho tên</th>
                 <th className="w-1/5 py-4 px-4 text-left text-[#ECF0F1] font-bold text-[11px] uppercase">Giới tính</th>
                 <th className="w-1/3 py-4 px-4 text-left text-[#ECF0F1] font-bold text-[11px] uppercase">Địa chỉ</th>
@@ -84,7 +97,9 @@ function Page() {
               {renderData()}
             </tbody>
           </table>
-          <AddSinhVien />
+          <div className="mx-10 my-10">
+            <AddSinhVien lop={lop} />
+          </div>
         </div>
       </div>
     </div>

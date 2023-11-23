@@ -82,17 +82,30 @@ function Layout({ children }) {
               </Link>
             </li>
             <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
-              <Link className="flex" href="/dashboard/khoa/">
+              <Link className="flex" href="/dashboard/khoa/gv">
                 <BookmarkFilledIcon className="w-5 h-5 mr-2" />
                 Quản lý giáo viên
               </Link>
             </li>
             <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
-              <Link className="flex" href="/dashboard/khoa/">
+              <Link className="flex" href="/dashboard/khoa/lop">
                 <BookmarkFilledIcon className="w-5 h-5 mr-2" />
-                Quản Lớp tín chi
+                Quản lý Lớp theo khoa
               </Link>
             </li>
+            <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
+              <Link className="flex" href="/dashboard/khoa/ltc">
+                <BookmarkFilledIcon className="w-5 h-5 mr-2" />
+                Quản lý tín chỉ
+              </Link>
+            </li>
+            <li className="pl-5 text-sm py-2 hover:bg-[#405467] cursor-pointer">
+              <Link className="flex" href="/dashboard/khoa/lhp">
+                <BookmarkFilledIcon className="w-5 h-5 mr-2" />
+                Quản lý Lớp học phần
+              </Link>
+            </li>
+
           </ul>
         </div>
       )

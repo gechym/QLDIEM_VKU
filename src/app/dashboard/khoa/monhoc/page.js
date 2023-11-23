@@ -13,6 +13,7 @@ import { ToastAction } from '~/app/components/ui/toast'
 import { AddMonHoc } from './components/addMonHoc'
 import { Button } from '~/app/components/ui/button'
 import { EditMonHoc } from './components/editMonHoc'
+import { getItemFromLocalStorage } from '~/utils/localStorage'
 
 function Page() {
   const [data, setData] = React.useState([])
@@ -48,11 +49,8 @@ function Page() {
     <div>
 
       <div>
-        <div className="font-bold text-lg">
+        <div className="font-bold text-lg mx-10 my-10">
           Môn Học :
-          {' '}
-          <AddMonHoc />
-          {' '}
         </div>
         <div className="w-full">
           {data.map((item) => (
@@ -67,9 +65,11 @@ function Page() {
             </div>
           ))}
         </div>
-
+        <div className="mx-10 my-10">
+          <AddMonHoc />
+        </div>
       </div>
-      <Alert className="w-[400px] mt-10 ml-5" variant="destructive">
+      <Alert className="w-[400px] mt-5 ml-5" variant="destructive">
         <ExclamationTriangleIcon className="h-4 w-4" />
         <AlertTitle>Lưu ý </AlertTitle>
         <AlertDescription>

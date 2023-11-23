@@ -13,6 +13,7 @@ import {
 } from '~/app/components/ui/dialog'
 import { Input } from '~/app/components/ui/input'
 import { Label } from '~/app/components/ui/label'
+import { getItemFromLocalStorage } from '~/utils/localStorage'
 
 // eslint-disable-next-line import/prefer-default-export
 export function EditMonHoc({ data }) {

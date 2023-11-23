@@ -13,6 +13,7 @@ import {
 } from '~/app/components/ui/dialog'
 import { Input } from '~/app/components/ui/input'
 import { Label } from '~/app/components/ui/label'
+import { getItemFromLocalStorage } from '~/utils/localStorage'
 
 // eslint-disable-next-line import/prefer-default-export
 export function AddMonHoc() {
@@ -34,7 +35,7 @@ export function AddMonHoc() {
   }
   const handleSubmit = async () => {
     const data = {
-      MAMH: mamh,
+      MAMH: `${mamh}-${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`,
       TENMH: tenmh,
       TINCHI: Number(sotc),
       SOTIET_LT: Number(solt),
@@ -70,55 +71,55 @@ export function AddMonHoc() {
             <Label htmlFor="Mã Môn Học" className="text-right text-[#2A3F54]">
               Mã môn học
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value.toUpperCase(), setMamh)} id="Mã Môn Học" value={mamh} className="col-span-3" />
+            <Input placeholder="ex: CTDL1" onChange={(e) => handleUpdateState(e.target.value.toUpperCase(), setMamh)} id="Mã Môn Học" value={mamh} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Tên môn học
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setTenmh)} id="name" value={tenmh} className="col-span-3" />
+            <Input placeholder="ex : Cấu trúc dữ liệu" onChange={(e) => handleUpdateState(e.target.value, setTenmh)} id="name" value={tenmh} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right text-[#2A3F54]">
               số tín chỉ
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setSotc)} type="number" id="username" value={sotc} className="col-span-3 text-[#2A3F54]" />
+            <Input placeholder="ex : 1" onChange={(e) => handleUpdateState(e.target.value, setSotc)} type="number" id="username" value={sotc} className="col-span-3 text-[#2A3F54]" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Số tiết lý thuyết
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setSolt)} id="name" type="number" value={solt} className="col-span-3" />
+            <Input placeholder="số tiết lý thuyết phải lớn hơn 30" onChange={(e) => handleUpdateState(e.target.value, setSolt)} id="name" type="number" value={solt} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Số tiết thực hành
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setSoth)} id="name" type="number" value={soth} className="col-span-3" />
+            <Input placeholder="số tiết lý thuyết phải lớn hơn 30" onChange={(e) => handleUpdateState(e.target.value, setSoth)} id="name" type="number" value={soth} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Hệ số chuyên cần
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setHesoCC)} id="name" type="number" value={hesoCC} className="col-span-3" />
+            <Input placeholder="ex : 0.1" onChange={(e) => handleUpdateState(e.target.value, setHesoCC)} id="name" type="number" value={hesoCC} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Hệ số bài tập
             </Label>
-            <Input id="name" onChange={(e) => handleUpdateState(e.target.value, setHesoBT)} value={hesoBT} type="number" className="col-span-3" />
+            <Input placeholder="ex : 0.2" id="name" onChange={(e) => handleUpdateState(e.target.value, setHesoBT)} value={hesoBT} type="number" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Hệ số giữa kỳ
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setHesoGK)} id="name" value={hesoGK} type="number" className="col-span-3" />
+            <Input placeholder="ex : 0.2" onChange={(e) => handleUpdateState(e.target.value, setHesoGK)} id="name" value={hesoGK} type="number" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-[#2A3F54]">
               Hệ số cuối kỳ
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setHesoCK)} id="name" value={hesoCK} type="number" className="col-span-3" />
+            <Input placeholder="ex : 0.6" onChange={(e) => handleUpdateState(e.target.value, setHesoCK)} id="name" value={hesoCK} type="number" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>

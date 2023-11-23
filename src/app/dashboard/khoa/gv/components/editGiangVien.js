@@ -16,17 +16,13 @@ import { Label } from '~/app/components/ui/label'
 import { getItemFromLocalStorage } from '~/utils/localStorage'
 
 // eslint-disable-next-line import/prefer-default-export
-export function EditSinhVien({ data , lop }) {
+export function EditGiangVien({ data }) {
   //
-  const [MASV, setMASV] = React.useState(data.MASV)
+  const [MAGV, setMAGV] = React.useState(data.MAGV)
   const [HO, setHO] = React.useState(data.HO)
   const [TEN, setTEN] = React.useState(data.TEN)
-  const [GIOITINH, setGIOITINH] = React.useState(data.GIOITINH)
-  const [DIACHI, setDIACHI] = React.useState(data.DIACHI)
-  const [NGAYSINH, setNGAYSINH] = React.useState(data.NGAYSINH)
-  const [MALOP, setMALOP] = React.useState(data.MALOP)
   const [EMAIL, setEMAIL] = React.useState(data.EMAIL)
-
+  const [HOCVI, setHOCVI] = React.useState(data.HOCVI)
   const [error, setError] = React.useState('')
 
   const handleUpdateState = (value, setFun) => {
@@ -36,21 +32,20 @@ export function EditSinhVien({ data , lop }) {
 
   const handleSubmit = async () => {
     const dataEdit = {
-      MASV,
+      MAKHOA: getItemFromLocalStorage('user[khoa]').data.MAKHOA,
       HO,
       TEN,
-      GIOITINH,
-      DIACHI,
-      NGAYSINH,
-      MALOP,
-      EMAIL,
+      HOCVI,
+      HOCHAM: 'Thạc sĩ',
+      CHUYENMON: 'Thạc sĩ',
       PASSWORD: '123',
+      EMAIL,
     }
     console.log(dataEdit)
     try {
-      const res = await axios.put(`http://localhost:8080/api/v1/khoa/sv/${data.MASV}?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`, dataEdit)
+      const res = await axios.put(`http://localhost:8080/api/v1/khoa/gv/${data.MAGV}?khoa=${getItemFromLocalStorage('user[khoa]').data.MAKHOA}`, dataEdit)
       console.log(res.data.data)
-      alert('Sửa sinh viên thành công')
+      alert('Cập nhật Giảng viên thành công')
       // reload lại trang
       window.location.reload()
     } catch (e) {
@@ -65,14 +60,14 @@ export function EditSinhVien({ data , lop }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
-          <DialogTitle className="text-[#2A3F54]">Sửa sinh viên</DialogTitle>
+          <DialogTitle className="text-[#2A3F54]">Sữa giảng viên</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Mã sinh viên" className="text-right text-[#2A3F54]">
-              Mã sinh viên
+            <Label htmlFor="Mã giảng viên" className="text-right text-[#2A3F54]">
+              Mã giảng viên
             </Label>
-            <Input id="Mã sinh viên" value={MASV} className="col-span-3" />
+            <Input id="Mã giảng viên" value={MAGV} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="Họ" className="text-right text-[#2A3F54]">
@@ -87,41 +82,10 @@ export function EditSinhVien({ data , lop }) {
             <Input onChange={(e) => handleUpdateState(e.target.value, setTEN)} id="Tên" value={TEN} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Giới tính" className="text-right text-[#2A3F54]">
-              Giới tính
+            <Label htmlFor="Học vị" className="text-right text-[#2A3F54]">
+              Học vị
             </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setGIOITINH)} id="Giới tính" value={GIOITINH} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Địa chỉ" className="text-right text-[#2A3F54]">
-              Địa chỉ
-            </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setDIACHI)} id="Địa chỉ" value={DIACHI} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Ngày sinh" className="text-right text-[#2A3F54]">
-              Ngày sinh
-            </Label>
-            <Input onChange={(e) => handleUpdateState(e.target.value, setNGAYSINH)} id="Ngày sinh" value={NGAYSINH} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="Mã lớp" className="text-right text-[#2A3F54]">
-              Mã lớp
-            </Label>
-            <select onChange={(e) => handleUpdateState(e.target.value, setMALOP)} id="countries" className="col-span-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="" selected>
-                Chọn lớp học
-              </option>
-              {
-                lop.map((item) => (
-                  <option key={item.MALOP} value={item.MALOP}>
-                    {item.MALOP}
-                    {' '}
-                    {item.TENLOP}
-                  </option>
-                ))
-              }
-            </select>
+            <Input onChange={(e) => handleUpdateState(e.target.value, setHOCVI)} id="Học vị" value={HOCVI} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="Email" className="text-right text-[#2A3F54]">
